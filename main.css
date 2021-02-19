@@ -18,5 +18,12 @@
     background: black;
 }
 .push-spaces{
-    height: 50px;
+    height: 30px;
+}
+.carousel{
+    height: 100%;
+    width: auto;
+}
+.carousel-inner img {
+    max-height: 300px;
 }
