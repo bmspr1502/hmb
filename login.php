@@ -18,6 +18,8 @@ if(isset($_SESSION['userid'])){
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
+    <link href="logo.jpg" rel="icon">
+
 </head>
 
 <body style="background: #FF9671">
