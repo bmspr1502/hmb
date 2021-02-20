@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['userid'])){
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,10 +15,11 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
+
 </head>
 
 <body style="background: #FF9671">
-
+<div class="container-fluid p-0">
 <header>
     <div class="jumbotron text-white jumbotron-image shadow" >
         <nav class="navbar navbar-expand-md navbar-dark">
@@ -31,11 +36,32 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link btn btn-dark btn-lg" href="cart.php">Cart</a>
+                        <a class="nav-link btn btn-dark btn-lg" href="cart.php"><?php
+                            if(isset($_SESSION['username'])){
+                                echo $_SESSION['username']."'s ";
+                            }
+                            ?>Cart</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link btn btn-dark btn-lg" href="#contact-us">Contact Us</a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <?php
+                        if(isset($_SESSION['username'])){
+                            ?>
+                            <a class="nav-link btn btn-dark btn-lg" href="logout.php">Logout</a>
+
+                            <?php
+                        }else{
+                            ?>
+                            <a class="nav-link btn btn-dark btn-lg" href="login.php">Login</a>
+
+                            <?php
+                        }
+                        ?>
                     </li>
                 </ul>
             </div>
@@ -50,7 +76,7 @@
 
 <div class="container">
     <h2 class="text-center">Menu Items</h2>
-    <div id="cart"></div>
+    <div id="cart" class="text-white text-center bg-success"></div>
     <div id="data">
     </div>
 </div>
@@ -65,37 +91,50 @@
                 </p>
             </div>
             <div class="col-lg-6">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="400" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="300" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
         </div>
     </div>
 </footer>
-
+<button onclick="topFunction()" id="myBtn" class="btn btn-danger"  title="Go to top"><i class="fa fa-arrow-up"></i> </button>
+</div>
+<script src="main.js"></script>
 <script>
+    var userid = Number(<?php echo $_SESSION['userid'];?>);
     window.onload = function () {
         getTable();
     }
+
     function getTable() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('data').innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open('GET', 'admin/tabledata.php', true);
-        xmlhttp.send();
+        $.post('admin/tabledata.php', function(result){
+            $('#data').html(result);
+        });
+
     }
+
     function addtocart(val, name, price){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('cart').innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open('GET', 'admin/addtocart.php?userid='+1+'&foodid='+val+'&price='+price+'&name='+name, true);
-        xmlhttp.send();
+        $.post('admin/addtocart.php',{
+            userid: userid,
+            foodid: val,
+            price: price,
+            name: name
+        },function (result) {
+            $('#cart').html(result);
+            $('#'+val+'btn').html('Add Another Set');
+            $('#'+val+'btn').removeClass('btn-success');
+            $('#'+val+'btn').addClass('btn-warning');
+            setTimeout(function () {
+                $('#cart').html('');
+            },2000);
+
+        });
+
     }
 </script>
 
 </body>
 </html>
+<?php
+}else{
+    header('Location:login.php');
+}

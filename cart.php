@@ -1,3 +1,7 @@
+<?php
+session_start();
+if(isset($_SESSION['userid'])){
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +18,7 @@
 </head>
 
 <body style="background: #FF9671">
-
+<div class="container-fluid p-0">
 <header>
     <div class="jumbotron text-white jumbotron-image shadow" >
         <nav class="navbar navbar-expand-md navbar-dark">
@@ -31,11 +35,32 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link btn btn-dark btn-lg" href="cart.php">Cart</a>
+                        <a class="nav-link btn btn-dark btn-lg" href="cart.php"><?php
+                            if(isset($_SESSION['username'])){
+                                echo $_SESSION['username']."'s ";
+                            }
+                            ?>Cart</a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link btn btn-dark btn-lg" href="#contact-us">Contact Us</a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <?php
+                        if(isset($_SESSION['username'])){
+                            ?>
+                            <a class="nav-link btn btn-dark btn-lg" href="logout.php">Logout</a>
+
+                            <?php
+                        }else{
+                            ?>
+                            <a class="nav-link btn btn-dark btn-lg" href="login.php">Login</a>
+
+                            <?php
+                        }
+                        ?>
                     </li>
                 </ul>
             </div>
@@ -50,8 +75,12 @@
 
 <div class="container">
     <h2 class="text-center">Cart Items</h2>
-    <div id="cart"></div>
+    <p>Hey <?php echo $_SESSION['username'];?>, here's your cart.</p><br>
+    <div id="cart" class="text-white text-center bg-success"></div>
     <div id="data">
+    </div>
+    <h2 class="text-center">Previous Transactions</h2>
+    <div id="txns">
     </div>
 </div>
 <footer class="mt-4">
@@ -65,39 +94,60 @@
                 </p>
             </div>
             <div class="col-lg-6">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="400" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="300" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
         </div>
     </div>
 </footer>
+    <button onclick="topFunction()" id="myBtn" class="btn btn-danger"  title="Go to top"><i class="fa fa-arrow-up"></i> </button>
 
+</div>
+<script src="main.js"></script>
 <script>
+    var userid = Number(<?php echo $_SESSION['userid'];?>);
     window.onload = function () {
         getTable();
+        getTxns();
     }
     function getTable() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('data').innerHTML = this.responseText;
+        $.post('admin/viewcart.php', {
+            userid: userid
+        }, function(result){
+            $('#data').html(result);
+        });
+
+    }
+    function deleteData(txnid){
+        $.post('admin/deletecart.php', {
+            txnid: txnid
+        }, function (result){
+            if(result==='SUCCESS'){
+                getTable();
             }
-        };
-        xmlhttp.open('GET', 'admin/viewcart.php?userid='+1, true);
-        xmlhttp.send();
+        });
+
+    }
+    function getTxns(){
+        $.post('admin/gettxns.php', {
+            userid: userid
+        }, function(result){
+            $('#txns').html(result);
+        });
     }
     function paynow(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('cart').innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open('GET', 'admin/paynow.php?userid='+1, true);
-        xmlhttp.send();
-
-        getTable();
+        $.post('admin/paynow.php',{
+            userid: userid
+        },function (result){
+            $('#cart').html(result);
+            getTable();
+            getTxns();
+        });
     }
 </script>
 
 </body>
 </html>
+<?php
+}else{
+    header('Location:login.php');
+}

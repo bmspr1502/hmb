@@ -2,20 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14ce610d-064a-47f7-a8ab-d8d4a6b5f71c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/DB.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/addtocart.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/paynow.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/tabledata.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/viewcart.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cart.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dosa.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/idli.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/meals.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/menu.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/addcust.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/deletecart.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/gettxns.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/verifylogin.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hmb.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/newcust.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/addtocart.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/addtocart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/paynow.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/paynow.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/tabledata.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/tabledata.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/viewcart.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/viewcart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/cart.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/menu.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -66,7 +71,8 @@
       <option name="presentableId" value="Default" />
       <updated>1613731683098</updated>
       <workItem from="1613731684719" duration="5849000" />
-      <workItem from="1613739937056" duration="8475000" />
+      <workItem from="1613739937056" duration="9071000" />
+      <workItem from="1613815313604" duration="14778000" />
     </task>
     <servers />
   </component>

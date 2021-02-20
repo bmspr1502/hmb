@@ -1,11 +1,11 @@
 <?php
 include "DB.php";
 
-if(isset($_GET['userid'])){
-    $userid = $_GET['userid'];
-    $foodid = $_GET['foodid'];
-    $name = $_GET['name'];
-    $price = $_GET['price'];
+if(isset($_POST['userid'])){
+    $userid = $_POST['userid'];
+    $foodid = $_POST['foodid'];
+    $name = $_POST['name'];
+    $price = $_POST['price'];
     $query = "INSERT INTO cart (userid, foodid, name, price, paid) VALUES ($userid, $foodid, '$name', $price, 0)";
 
     if($con->query($query)){

@@ -1,8 +1,8 @@
 <?php
 include "DB.php";
 
-if(isset($_GET['userid'])){
-    $userid = $_GET['userid'];
+if(isset($_POST['userid'])){
+    $userid = $_POST['userid'];
 
     $query = "UPDATE cart SET paid=1 WHERE userid=$userid";
 

@@ -3,22 +3,6 @@ session_start();
 if(isset($_SESSION['userid'])){
     echo "<script>window.location.href='menu.php';</script>";
 }else{
-    if(isset($_POST['login'])){
-        $phone = $_POST['phone'];
-        $pwd = $_POST['password'];
-
-        include 'admin/DB.php';
-        $query = 'SELECT * FROM user WHERE phone=$phone';
-        if($con->query($query)){
-            $row = $result->fetch_assoc();
-            if($pwd == $row['password']){
-                
-            }
-        }
-
-    }
-
-}
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +21,7 @@ if(isset($_SESSION['userid'])){
 </head>
 
 <body style="background: #FF9671">
+<div class="container-fluid p-0">
 
 <header>
     <div class="jumbotron text-white jumbotron-image shadow" >
@@ -60,6 +45,9 @@ if(isset($_SESSION['userid'])){
                     <li class="nav-item">
                         <a class="nav-link btn btn-dark btn-lg" href="#contact-us">Contact Us</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-dark btn-lg" href="login.php">Login</a>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -72,24 +60,24 @@ if(isset($_SESSION['userid'])){
 </header>
 
 <div class="container">
-    <h2 class="text-center">Menu Items</h2>
+    <h2 class="text-center">Customer Login</h2>
+    <p id="error" class="text-white text-center bg-danger"></p>
     <div class="container">
-        <form action="login.php" method="post">
-            <table>
-                <tr>
-                    <td>Customer Phone no.:</td>
-                    <td><input type="text" id="phone" name="phone"></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><input type="password" name="password"></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" class="submit" name="login" value="Login"></td>
-                    <td><input type="submit" class="submit" name="signup" value="New Customer"></td>
-                </tr>
-            </table>
+        <div class="col-md-6 mx-auto card p-4">
+        <form>
+            <div class="form-group">
+                <label for="phno">Customer Phone no.:</label>
+                <input type="text" class="form-control" placeholder="Enter phone no." id="phone" name="phone">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
+            </div>
+
+            <button type="button" class="btn btn-primary submit" name="login" onclick="verifyLogin()">Login</button>
+            <a type="button" class="btn btn-success submit" href="newcust.php" >New Customer</a>
         </form>
+        </div>
     </div>
 </div>
 <footer class="mt-4">
@@ -103,37 +91,34 @@ if(isset($_SESSION['userid'])){
                 </p>
             </div>
             <div class="col-lg-6">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="400" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3887.478094832939!2d80.24905!3d13.005198000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x16f41d10f57949e9!2sKasthurba%20Nagar!5e0!3m2!1sen!2sus!4v1613743064308!5m2!1sen!2sus" width="300" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
         </div>
     </div>
 </footer>
+    <button onclick="topFunction()" id="myBtn" class="btn btn-danger"  title="Go to top"><i class="fa fa-arrow-up"></i> </button>
 
+</div>
+<script src="main.js"></script>
 <script>
-    window.onload = function () {
-        getTable();
-    }
-    function getTable() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('data').innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open('GET', 'admin/tabledata.php', true);
-        xmlhttp.send();
-    }
-    function addtocart(val, name, price){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if(this.readyState == 4 && this.status){
-                document.getElementById('cart').innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open('GET', 'admin/addtocart.php?userid='+1+'&foodid='+val+'&price='+price+'&name='+name, true);
-        xmlhttp.send();
-    }
+   function verifyLogin(){
+       if(!($('#phone').val() && $('#password').val())){
+            $('#error').html('Please enter phone number and password');
+       }else{
+           var phno = $('#phone').val();
+           var pwd = $('#password').val();
+
+           $.post('admin/verifylogin.php', {
+               phone: phno,
+               password: pwd
+           }, function (result){
+               $('#error').html(result);
+           })
+       }
+   }
 </script>
 
 </body>
 </html>
+<?php
+}
